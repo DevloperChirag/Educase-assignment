@@ -12,15 +12,17 @@ exports.addSchool = (req, res) => {
     "INSERT INTO schools (name, address, latitude, longitude) VALUES (?, ?, ?, ?)";
   con.query(query, [name, address, latitude, longitude], (err, result) => {
     if (err) {
+      console.log(err);
+
       return res.status(500).json({
         success: false,
-        message: "Database Error",
+        error: err.message
       });
     } else {
       return res.status(201).json({
         success: true,
         message: "School added successfully",
-        schoolId: result.insertId
+        schoolId: result.insertId,
       });
     }
   });
